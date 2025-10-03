@@ -100,9 +100,9 @@
                             <div class="quantity-selector">
                                 <label>Quantity:</label>
                                 <div class="quantity-controls">
-                                    <button class="qty-btn">-</button>
-                                    <span class="quantity">1</span>
-                                    <button class="qty-btn">+</button>
+                                    <button class="qty-btn" onclick="changeQuantity(-1)">-</button>
+                                    <span class="quantity" id="quantityDisplay">1</span>
+                                    <button class="qty-btn" onclick="changeQuantity(1)">+</button>
                                 </div>
                             </div>
                         </div>
@@ -142,18 +142,38 @@
         <!-- Contact Section -->
         <section id="contact" class="contact-section">
             <div class="container">
-                <h2>Get in Touch</h2>
+                <div class="contact-header">
+                    <h2>Get in Touch</h2>
+                    <p class="contact-subtitle">We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+                </div>
+                
                 <div class="contact-content">
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <i class="fas fa-envelope"></i>
-                            <a href="mailto:islamstack0@gmail.com" class="email-link">islamstack0@gmail.com</a>
+                    <div class="contact-card">
+                        <div class="contact-icon-wrapper">
+                            <i class="fas fa-envelope contact-main-icon"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Email Us</h3>
+                            <p>Send us an email anytime</p>
+                            <a href="mailto:islamstack0@gmail.com" class="email-link">
+                                <i class="fas fa-envelope"></i>
+                                islamstack0@gmail.com
+                            </a>
                         </div>
                     </div>
-                    
+                </div>
+                
+                <div class="social-section">
+                    <h3>Follow Us</h3>
                     <div class="social-links">
-                        <a href="#"><i class="fab fa-tiktok"></i></a>
-                        <a href="https://instagram.com/islamstack" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link tiktok">
+                            <i class="fab fa-tiktok"></i>
+                            <span>TikTok</span>
+                        </a>
+                        <a href="https://instagram.com/islamstack" target="_blank" class="social-link instagram">
+                            <i class="fab fa-instagram"></i>
+                            <span>Instagram</span>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -212,10 +232,18 @@
         
         let cart = [];
         let cartCount = 0;
+        let currentQuantity = 1;
+
+        function changeQuantity(change) {
+            currentQuantity += change;
+            if (currentQuantity < 1) currentQuantity = 1;
+            if (currentQuantity > 10) currentQuantity = 10; // Max quantity limit
+            document.getElementById('quantityDisplay').textContent = currentQuantity;
+        }
 
         function addToCart() {
             const selectedStyle = document.querySelector('.size-btn.active').getAttribute('data-size');
-            const quantity = parseInt(document.querySelector('.quantity').textContent);
+            const quantity = currentQuantity;
             
             // Check if item already exists in cart
             const existingItem = cart.find(item => item.style === selectedStyle);
