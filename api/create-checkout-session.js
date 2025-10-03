@@ -50,8 +50,7 @@ export default async function handler(req, res) {
       success_url: 'https://islamstack.vercel.app/success.html',
       cancel_url: 'https://islamstack.vercel.app/cancel.html',
       shipping_address_collection: {
-        allowed_countries: ['US', 'CA', 'GB', 'AU', 'DE', 'FR', 'IT', 'ES', 'NL', 'BE', 'AT', 'CH', 'SE', 'NO', 'DK', 'FI', 'IE', 'PT', 'LU', 'MT', 'CY', 'EE', 'LV', 'LT', 'PL', 'CZ', 'SK', 'HU', 'SI', 'HR', 'BG', 'RO', 'GR', 'JP', 'KR', 'SG', 'HK', 'MY', 'TH', 'PH', 'ID', 'VN', 'IN', 'NZ', 'BR', 'MX', 'AR', 'CL', 'CO', 'PE', 'UY', 'ZA', 'EG', 'MA', 'TN', 'DZ', 'LY', 'SD', 'ET', 'KE', 'UG', 'TZ', 'GH', 'NG', 'ZA', 'ZW', 'BW', 'NA', 'SZ', 'LS', 'MW', 'ZM', 'AO', 'MZ', 'MG', 'MU', 'SC', 'KM', 'DJ', 'SO', 'ER', 'SS', 'CF', 'TD', 'NE', 'ML', 'BF', 'CI', 'LR', 'SL', 'GN', 'GW', 'GM', 'SN', 'MR', 'CV', 'ST', 'GQ', 'GA', 'CG', 'CD', 'CM', 'BI', 'RW', 'UG', 'TZ', 'KE', 'ET', 'SO', 'DJ', 'ER', 'SS', 'CF', 'TD', 'NE', 'ML', 'BF', 'CI', 'LR', 'SL', 'GN', 'GW', 'GM', 'SN', 'MR', 'CV', 'ST', 'GQ', 'GA', 'CG', 'CD', 'CM', 'BI', 'RW'],
-        required: true
+        allowed_countries: ['US', 'CA', 'GB', 'AU', 'DE', 'FR', 'IT', 'ES', 'NL', 'BE', 'AT', 'CH', 'SE', 'NO', 'DK', 'FI', 'IE', 'PT', 'LU', 'MT', 'CY', 'EE', 'LV', 'LT', 'PL', 'CZ', 'SK', 'HU', 'SI', 'HR', 'BG', 'RO', 'GR', 'JP', 'KR', 'SG', 'HK', 'MY', 'TH', 'PH', 'ID', 'VN', 'IN', 'NZ', 'BR', 'MX', 'AR', 'CL', 'CO', 'PE', 'UY', 'ZA', 'EG', 'MA', 'TN', 'DZ', 'LY', 'SD', 'ET', 'KE', 'UG', 'TZ', 'GH', 'NG', 'ZA', 'ZW', 'BW', 'NA', 'SZ', 'LS', 'MW', 'ZM', 'AO', 'MZ', 'MG', 'MU', 'SC', 'KM', 'DJ', 'SO', 'ER', 'SS', 'CF', 'TD', 'NE', 'ML', 'BF', 'CI', 'LR', 'SL', 'GN', 'GW', 'GM', 'SN', 'MR', 'CV', 'ST', 'GQ', 'GA', 'CG', 'CD', 'CM', 'BI', 'RW', 'UG', 'TZ', 'KE', 'ET', 'SO', 'DJ', 'ER', 'SS', 'CF', 'TD', 'NE', 'ML', 'BF', 'CI', 'LR', 'SL', 'GN', 'GW', 'GM', 'SN', 'MR', 'CV', 'ST', 'GQ', 'GA', 'CG', 'CD', 'CM', 'BI', 'RW']
       },
       phone_number_collection: {
         enabled: true
