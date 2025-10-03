@@ -45,10 +45,10 @@ export default async function handler(req, res) {
             payment_method_types: ['card'],
             line_items: line_items,
             mode: mode || 'payment',
-            success_url: success_url || `${req.headers.origin}/success.html`,
-            cancel_url: cancel_url || `${req.headers.origin}/cancel.html`,
+            success_url: success_url || `https://islamstack.vercel.app/success.html`,
+            cancel_url: cancel_url || `https://islamstack.vercel.app/cancel.html`,
             metadata: {
-                source: 'islm-stack-website'
+                source: 'islamstack-website'
             }
         });
 
