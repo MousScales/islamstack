@@ -1,7 +1,6 @@
 {
   "name": "islamstack",
   "version": "1.0.0",
-  "type": "module",
   "dependencies": {
     "stripe": "^14.12.0"
   }

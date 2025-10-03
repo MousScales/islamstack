@@ -1,88 +1,72 @@
-import Stripe from 'stripe';
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-
-// Debug: Check if API key is loaded
-console.log('Stripe API key loaded:', process.env.STRIPE_SECRET_KEY ? 'Yes' : 'No');
-console.log('API key starts with:', process.env.STRIPE_SECRET_KEY ? process.env.STRIPE_SECRET_KEY.substring(0, 10) + '...' : 'No key');
-
-// Stripe product mapping
-const stripeProducts = {
-    'Style 1': { productId: 'prod_TALKJCrtITlN2W', priceId: 'price_1SE0dNRzY93579XlRSSAxRg2' },
-    'Style 2': { productId: 'prod_TALKLPR10JASn2', priceId: 'price_1SE0dNRzY93579XlrcVsbu51' },
-    'Style 3': { productId: 'prod_TALKaKWSHP3DpE', priceId: 'price_1SE0dORzY93579XlDPrXHenA' },
-    'Style 4': { productId: 'prod_TALK2uxxnd3Fhv', priceId: 'price_1SE0dORzY93579Xl3CUtXQDG' },
-    'Style 5': { productId: 'prod_TALKioQMZ5AGIM', priceId: 'price_1SE0dORzY93579Xl0RJf5Fij' },
-    'Style 6': { productId: 'prod_TALKu8bqzPLbjn', priceId: 'price_1SE0dPRzY93579XlWU1iTKQS' }
-};
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 export default async function handler(req, res) {
-    // Enable CORS
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  // Enable CORS
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-    if (req.method === 'OPTIONS') {
-        res.status(200).end();
-        return;
+  if (req.method === 'OPTIONS') {
+    res.status(200).end();
+    return;
+  }
+
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  try {
+    console.log('=== STRIPE CHECKOUT DEBUG ===');
+    console.log('API Key exists:', !!process.env.STRIPE_SECRET_KEY);
+    console.log('API Key starts with:', process.env.STRIPE_SECRET_KEY?.substring(0, 7) + '...');
+    console.log('Request body:', JSON.stringify(req.body, null, 2));
+
+    const { cart_items } = req.body;
+
+    if (!cart_items || !Array.isArray(cart_items) || cart_items.length === 0) {
+      return res.status(400).json({ error: 'No items in cart' });
     }
 
-    if (req.method !== 'POST') {
-        return res.status(405).json({ error: 'Method not allowed' });
-    }
+    // Simple product mapping - just use one price for all styles
+    const line_items = cart_items.map(item => ({
+      price_data: {
+        currency: 'usd',
+        product_data: {
+          name: `Quran Magnet Speaker - ${item.style}`,
+          description: 'Premium Islamic Speaker for Quran Recitation',
+          images: [`https://islamstack.vercel.app/${item.style.split(' ')[1]}.jpg`],
+        },
+        unit_amount: 3000, // $30.00 in cents
+      },
+      quantity: item.quantity,
+    }));
 
-    try {
-        console.log('Request body:', req.body);
-        const { cart_items, mode, success_url, cancel_url } = req.body;
+    console.log('Line items created:', JSON.stringify(line_items, null, 2));
 
-        if (!cart_items || !Array.isArray(cart_items) || cart_items.length === 0) {
-            console.error('Invalid cart_items:', cart_items);
-            return res.status(400).json({ error: 'Invalid cart items' });
-        }
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      line_items,
+      mode: 'payment',
+      success_url: 'https://islamstack.vercel.app/success.html',
+      cancel_url: 'https://islamstack.vercel.app/cancel.html',
+      metadata: {
+        source: 'islamstack-website'
+      }
+    });
 
-        console.log('Processing cart items:', cart_items);
+    console.log('Stripe session created successfully:', session.id);
+    res.status(200).json({ id: session.id });
 
-        // Convert cart items to Stripe line items using actual product IDs
-        const line_items = cart_items.map(item => {
-            console.log('Processing item:', item);
-            const stripeProduct = stripeProducts[item.style];
-            if (!stripeProduct) {
-                console.error(`Product not found for style: ${item.style}`);
-                throw new Error(`Product not found for style: ${item.style}`);
-            }
-            
-            return {
-                price: stripeProduct.priceId,
-                quantity: item.quantity,
-            };
-        });
-
-        console.log('Line items:', line_items);
-
-        const session = await stripe.checkout.sessions.create({
-            payment_method_types: ['card'],
-            line_items: line_items,
-            mode: mode || 'payment',
-            success_url: success_url || `https://islamstack.vercel.app/success.html`,
-            cancel_url: cancel_url || `https://islamstack.vercel.app/cancel.html`,
-            metadata: {
-                source: 'islamstack-website'
-            }
-        });
-
-        console.log('Stripe session created:', session.id);
-        res.status(200).json({ id: session.id });
-    } catch (error) {
-        console.error('Error creating checkout session:', error);
-        console.error('Error details:', {
-            message: error.message,
-            type: error.type,
-            code: error.code,
-            stack: error.stack
-        });
-        res.status(500).json({ 
-            error: 'Failed to create checkout session',
-            details: error.message 
-        });
-    }
+  } catch (error) {
+    console.error('=== STRIPE ERROR ===');
+    console.error('Error type:', error.type);
+    console.error('Error message:', error.message);
+    console.error('Error code:', error.code);
+    console.error('Full error:', error);
+    
+    res.status(500).json({ 
+      error: 'Failed to create checkout session',
+      details: error.message 
+    });
+  }
 }
