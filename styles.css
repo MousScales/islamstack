@@ -684,6 +684,19 @@ body {
     width: 20px;
 }
 
+.email-link {
+    color: #d4af37;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid transparent;
+}
+
+.email-link:hover {
+    color: #b8860b;
+    border-bottom: 1px solid #b8860b;
+    text-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
+}
+
 .social-links {
     display: flex;
     gap: 1rem;
