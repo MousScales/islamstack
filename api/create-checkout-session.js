@@ -1,4 +1,6 @@
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+import Stripe from 'stripe';
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 // Debug: Check if API key is loaded
 console.log('Stripe API key loaded:', process.env.STRIPE_SECRET_KEY ? 'Yes' : 'No');
