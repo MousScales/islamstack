@@ -46,12 +46,33 @@ Run the script to create products in your Stripe dashboard:
 node create-stripe-products.js
 ```
 
-### 6. Start the Server
+### 6. Start the Server (Local Development)
 ```bash
 npm start
 ```
 
 The site will be available at `http://localhost:3000`
+
+## Vercel Deployment
+
+### 1. Deploy to Vercel
+1. Connect your GitHub repository to Vercel
+2. Vercel will automatically detect it's a Node.js project
+3. Add environment variables in Vercel dashboard:
+   - `STRIPE_SECRET_KEY`: Your Stripe secret key
+   - `STRIPE_PUBLISHABLE_KEY`: Your Stripe publishable key
+
+### 2. Update Frontend for Production
+After deployment, update the Stripe publishable key in `index.html` with your live key:
+```javascript
+const stripe = Stripe('pk_live_your_live_stripe_publishable_key_here');
+```
+
+### 3. Vercel Configuration
+The project includes:
+- `vercel.json` - Vercel configuration
+- `api/create-checkout-session.js` - Serverless function for Stripe
+- `success.html` and `cancel.html` - Payment result pages
 
 ## File Structure
 
