@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>islm stack - Quran Magnet Speaker</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <header class="simple-header">
+        <div class="container">
+            <div class="header-flex">
+                <div class="header-top">
+                    <h1 class="brand">islmstack</h1>
+                    <div class="cart" onclick="toggleCart()">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span id="cartCount">0</span>
+                    </div>
+                </div>
+                <div class="verse">
+                    <p class="arabic">وَإِذَا قُرِئَ الْقُرْآنُ فَاسْتَمِعُوا لَهُ وَأَنصِتُوا لَعَلَّكُمْ تُرْحَمُونَ</p>
+                    <p class="english">"And when the Quran is recited, listen to it and be silent that you may receive mercy."</p>
+                    <p class="reference">Surah Al-A'raf, Ayah 204</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Product Section -->
+        <section id="product" class="product-section">
+            <div class="container">
+                <div class="product-grid">
+                    <div class="product-images">
+                        <div class="main-image">
+                            <img src="1.jpg" alt="The Quran Magnet" id="mainImage">
+                        </div>
+                        <div class="thumbnail-images">
+                            <img src="1.jpg" alt="Style 1" class="thumbnail active" onclick="document.getElementById('mainImage').src='1.jpg'; document.querySelectorAll('.thumbnail').forEach(t=>t.classList.remove('active')); this.classList.add('active'); document.querySelectorAll('.size-btn').forEach(b=>b.classList.remove('active')); document.querySelector('.size-btn[data-size=\'Style 1\']').classList.add('active');">
+                            <img src="2.jpg" alt="Style 2" class="thumbnail" onclick="document.getElementById('mainImage').src='2.jpg'; document.querySelectorAll('.thumbnail').forEach(t=>t.classList.remove('active')); this.classList.add('active'); document.querySelectorAll('.size-btn').forEach(b=>b.classList.remove('active')); document.querySelector('.size-btn[data-size=\'Style 2\']').classList.add('active');">
+                            <img src="3.jpg" alt="Style 3" class="thumbnail" onclick="document.getElementById('mainImage').src='3.jpg'; document.querySelectorAll('.thumbnail').forEach(t=>t.classList.remove('active')); this.classList.add('active'); document.querySelectorAll('.size-btn').forEach(b=>b.classList.remove('active')); document.querySelector('.size-btn[data-size=\'Style 3\']').classList.add('active');">
+                            <img src="4.jpg" alt="Style 4" class="thumbnail" onclick="document.getElementById('mainImage').src='4.jpg'; document.querySelectorAll('.thumbnail').forEach(t=>t.classList.remove('active')); this.classList.add('active'); document.querySelectorAll('.size-btn').forEach(b=>b.classList.remove('active')); document.querySelector('.size-btn[data-size=\'Style 4\']').classList.add('active');">
+                            <img src="5.jpg" alt="Style 5" class="thumbnail" onclick="document.getElementById('mainImage').src='5.jpg'; document.querySelectorAll('.thumbnail').forEach(t=>t.classList.remove('active')); this.classList.add('active'); document.querySelectorAll('.size-btn').forEach(b=>b.classList.remove('active')); document.querySelector('.size-btn[data-size=\'Style 5\']').classList.add('active');">
+                            <img src="6.jpg" alt="Style 6" class="thumbnail" onclick="document.getElementById('mainImage').src='6.jpg'; document.querySelectorAll('.thumbnail').forEach(t=>t.classList.remove('active')); this.classList.add('active'); document.querySelectorAll('.size-btn').forEach(b=>b.classList.remove('active')); document.querySelector('.size-btn[data-size=\'Style 6\']').classList.add('active');">
+                        </div>
+                    </div>
+                    
+                    <div class="product-info">
+                        <h1 class="product-title">Quran Magnet Speaker</h1>
+                        <div class="product-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="product-price">
+                            <span class="current-price">$30.00</span>
+                            <span class="original-price">$50.00</span>
+                            <span class="discount">40% OFF</span>
+                        </div>
+                        
+                        <div class="product-description">
+                            <p>Bring the beauty and blessings of the Quran into your home with the Quran Magnet, a unique combination of a stylish fridge magnet and a powerful Surah player. Compact, functional, and spiritual, this innovative product is perfect for daily Quranic recitation, teaching children, or setting a peaceful atmosphere at home.</p>
+                            
+                            <ul class="product-features">
+                                <li><i class="fas fa-check"></i> Stylish Fridge Magnet Design</li>
+                                <li><i class="fas fa-check"></i> Built-in Surah Player</li>
+                                <li><i class="fas fa-check"></i> Perfect for Daily Recitation</li>
+                                <li><i class="fas fa-check"></i> Ideal for Teaching Children</li>
+                                <li><i class="fas fa-check"></i> Creates Peaceful Home Atmosphere</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="product-options">
+                            <div class="size-selector">
+                                <label>Style:</label>
+                                <div class="size-options">
+                                    <button class="size-btn active" data-size="Style 1" onclick="document.getElementById('mainImage').src='1.jpg'; document.querySelectorAll('.size-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active'); document.querySelectorAll('.thumbnail').forEach(t=>t.classList.remove('active')); document.querySelector('.thumbnail[alt=\'Style 1\']').classList.add('active');">Style 1</button>
+                                    <button class="size-btn" data-size="Style 2" onclick="document.getElementById('mainImage').src='2.jpg'; document.querySelectorAll('.size-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active'); document.querySelectorAll('.thumbnail').forEach(t=>t.classList.remove('active')); document.querySelector('.thumbnail[alt=\'Style 2\']').classList.add('active');">Style 2</button>
+                                    <button class="size-btn" data-size="Style 3" onclick="document.getElementById('mainImage').src='3.jpg'; document.querySelectorAll('.size-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active'); document.querySelectorAll('.thumbnail').forEach(t=>t.classList.remove('active')); document.querySelector('.thumbnail[alt=\'Style 3\']').classList.add('active');">Style 3</button>
+                                    <button class="size-btn" data-size="Style 4" onclick="document.getElementById('mainImage').src='4.jpg'; document.querySelectorAll('.size-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active'); document.querySelectorAll('.thumbnail').forEach(t=>t.classList.remove('active')); document.querySelector('.thumbnail[alt=\'Style 4\']').classList.add('active');">Style 4</button>
+                                    <button class="size-btn" data-size="Style 5" onclick="document.getElementById('mainImage').src='5.jpg'; document.querySelectorAll('.size-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active'); document.querySelectorAll('.thumbnail').forEach(t=>t.classList.remove('active')); document.querySelector('.thumbnail[alt=\'Style 5\']').classList.add('active');">Style 5</button>
+                                    <button class="size-btn" data-size="Style 6" onclick="document.getElementById('mainImage').src='6.jpg'; document.querySelectorAll('.size-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active'); document.querySelectorAll('.thumbnail').forEach(t=>t.classList.remove('active')); document.querySelector('.thumbnail[alt=\'Style 6\']').classList.add('active');">Style 6</button>
+                                </div>
+                            </div>
+                            
+                            <div class="quantity-selector">
+                                <label>Quantity:</label>
+                                <div class="quantity-controls">
+                                    <button class="qty-btn">-</button>
+                                    <span class="quantity">1</span>
+                                    <button class="qty-btn">+</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="product-actions">
+                            <button class="add-to-cart-btn" onclick="addToCart()">
+                                <i class="fas fa-shopping-cart"></i>
+                                Add to Cart
+                            </button>
+                            <button class="view-cart-btn" id="viewCartBtn" onclick="toggleCart()" style="display: none;">
+                                <i class="fas fa-eye"></i>
+                                View Cart
+                            </button>
+                        </div>
+                        
+                        
+                        <div class="product-shipping">
+                            <div class="shipping-info">
+                                <i class="fas fa-truck"></i>
+                                <span>Free shipping on orders over $50</span>
+                            </div>
+                            <div class="shipping-info">
+                                <i class="fas fa-undo"></i>
+                                <span>30-day return policy</span>
+                            </div>
+                            <div class="shipping-info">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>Secure checkout</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact-section">
+            <div class="container">
+                <h2>Get in Touch</h2>
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>islamstack0@gmail.com</span>
+                        </div>
+                    </div>
+                    
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Cart Modal -->
+    <div id="cartModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeCart()">&times;</span>
+            <h2>Shopping Cart</h2>
+            <div id="cartItems"></div>
+            <div class="cart-total">
+                <h3>Total: $<span id="cartTotal">0.00</span></h3>
+                <button class="checkout-btn" onclick="proceedToCheckout()">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>islm stack</h3>
+                    <p>Bringing the beauty and blessings of the Quran into your home</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 islm stack. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Modal -->
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h3>Shopping Cart</h3>
+                <button class="close-cart" onclick="toggleCart()">&times;</button>
+            </div>
+            <div class="cart-items" id="cartItems">
+                <!-- Cart items will be added here -->
+            </div>
+            <div class="cart-footer">
+                <div class="cart-total">
+                    <strong>Total: $<span id="cartTotal">0.00</span></strong>
+                </div>
+                <button class="checkout-btn" onclick="proceedToCheckout()">Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Stripe
+        const stripe = Stripe('pk_live_51SE0RVRzY93579Xl7RUF0sSnvlFTaisVn7yay1dcgpy6QVMrjkOnR35qONxlxv1XHLeosVpNmaJvvJIkgJTp6JEb00ePj10p6u');
+        
+        let cart = [];
+        let cartCount = 0;
+
+        function addToCart() {
+            const selectedStyle = document.querySelector('.size-btn.active').getAttribute('data-size');
+            const quantity = parseInt(document.querySelector('.quantity').textContent);
+            
+            // Check if item already exists in cart
+            const existingItem = cart.find(item => item.style === selectedStyle);
+            
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                cart.push({
+                    name: 'Premium Islamic Speaker',
+                    style: selectedStyle,
+                    price: 30.00,
+                    quantity: quantity
+                });
+            }
+            
+            cartCount += quantity;
+            updateCartDisplay();
+            showViewCartButton();
+        }
+
+        function updateCartDisplay() {
+            document.getElementById('cartCount').textContent = cartCount;
+            
+            const cartItems = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p>Your cart is empty</p>';
+                cartTotal.textContent = '0.00';
+                return;
+            }
+            
+            let total = 0;
+            cartItems.innerHTML = '';
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                
+                // Get the image number from the style (Style 1 = 1.jpg, etc.)
+                const imageNumber = item.style.split(' ')[1];
+                
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.innerHTML = `
+                    <div class="item-image">
+                        <img src="${imageNumber}.jpg" alt="${item.style}" />
+                    </div>
+                    <div class="item-info">
+                        <h4>${item.name}</h4>
+                        <p>Style: ${item.style}</p>
+                        <p>Quantity: ${item.quantity}</p>
+                    </div>
+                    <div class="item-price">$${itemTotal.toFixed(2)}</div>
+                `;
+                cartItems.appendChild(cartItem);
+            });
+            
+            cartTotal.textContent = total.toFixed(2);
+        }
+
+        function showViewCartButton() {
+            document.getElementById('viewCartBtn').style.display = 'inline-block';
+        }
+
+        function toggleCart() {
+            const cartModal = document.getElementById('cartModal');
+            cartModal.style.display = cartModal.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Close cart when clicking outside
+        window.onclick = function(event) {
+            const cartModal = document.getElementById('cartModal');
+            if (event.target === cartModal) {
+                cartModal.style.display = 'none';
+            }
+        }
+
+        // Stripe Checkout Function
+        async function proceedToCheckout() {
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+
+            // Show loading state
+            const checkoutBtn = document.querySelector('.checkout-btn');
+            const originalText = checkoutBtn.textContent;
+            checkoutBtn.textContent = 'Processing...';
+            checkoutBtn.disabled = true;
+
+            try {
+                // Create checkout session
+                const response = await fetch('http://localhost:3000/create-checkout-session', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        cart_items: cart,
+                        mode: 'payment',
+                        success_url: window.location.origin + '/success.html',
+                        cancel_url: window.location.origin + '/cancel.html',
+                    }),
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to create checkout session');
+                }
+
+                const session = await response.json();
+                
+                // Redirect to Stripe Checkout
+                const result = await stripe.redirectToCheckout({
+                    sessionId: session.id,
+                });
+
+                if (result.error) {
+                    console.error('Error:', result.error);
+                    alert('Something went wrong. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Something went wrong. Please try again.');
+            } finally {
+                // Reset button state
+                checkoutBtn.textContent = originalText;
+                checkoutBtn.disabled = false;
+            }
+        }
+    </script>
+
+</body>
+</html>
