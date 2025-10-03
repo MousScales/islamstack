@@ -59,13 +59,35 @@
             background: linear-gradient(135deg, #b8860b 0%, #d4af37 100%);
             transform: translateY(-2px);
         }
+        .shipping-info {
+            background: rgba(76, 175, 80, 0.1);
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: left;
+        }
+        .shipping-info p {
+            margin: 0.5rem 0;
+            font-size: 1rem;
+            color: #e0e0e0;
+        }
+        .shipping-info i {
+            color: #4CAF50;
+            margin-right: 0.5rem;
+            width: 20px;
+        }
     </style>
 </head>
 <body>
     <div class="success-container">
         <div class="success-icon">✅</div>
         <h1>Payment Successful!</h1>
-        <p>Thank you for your purchase. Your order has been placed and will be processed shortly.</p>
+        <p>Thank you for your purchase! Your Quran Magnet Speaker will be shipped to the address you provided.</p>
+        <div class="shipping-info">
+            <p><i class="fas fa-shipping-fast"></i> Your order will be processed and shipped within 1-2 business days.</p>
+            <p><i class="fas fa-envelope"></i> You will receive a shipping confirmation email with tracking details.</p>
+        </div>
         <a href="/" class="home-btn">Continue Shopping</a>
     </div>
 </body>
