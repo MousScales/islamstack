@@ -329,6 +329,8 @@
                 return;
             }
 
+            console.log('Cart items:', cart);
+
             // Show loading state
             const checkoutBtn = document.querySelector('.checkout-btn');
             const originalText = checkoutBtn.textContent;
@@ -336,6 +338,8 @@
             checkoutBtn.disabled = true;
 
             try {
+                console.log('Creating checkout session...');
+                
                 // Create checkout session
                 const response = await fetch('/api/create-checkout-session', {
                     method: 'POST',
@@ -345,13 +349,18 @@
                     body: JSON.stringify({
                         cart_items: cart,
                         mode: 'payment',
-                        success_url: window.location.origin + '/success.html',
-                        cancel_url: window.location.origin + '/cancel.html',
+                        success_url: 'https://islamstack.vercel.app/success.html',
+                        cancel_url: 'https://islamstack.vercel.app/cancel.html',
                     }),
                 });
 
+                console.log('Response status:', response.status);
+                console.log('Response ok:', response.ok);
+
                 if (!response.ok) {
-                    throw new Error('Failed to create checkout session');
+                    const errorText = await response.text();
+                    console.error('Error response:', errorText);
+                    throw new Error(`Failed to create checkout session: ${response.status} - ${errorText}`);
                 }
 
                 const session = await response.json();

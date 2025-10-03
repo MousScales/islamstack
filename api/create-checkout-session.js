@@ -26,12 +26,22 @@ export default async function handler(req, res) {
     }
 
     try {
+        console.log('Request body:', req.body);
         const { cart_items, mode, success_url, cancel_url } = req.body;
+
+        if (!cart_items || !Array.isArray(cart_items) || cart_items.length === 0) {
+            console.error('Invalid cart_items:', cart_items);
+            return res.status(400).json({ error: 'Invalid cart items' });
+        }
+
+        console.log('Processing cart items:', cart_items);
 
         // Convert cart items to Stripe line items using actual product IDs
         const line_items = cart_items.map(item => {
+            console.log('Processing item:', item);
             const stripeProduct = stripeProducts[item.style];
             if (!stripeProduct) {
+                console.error(`Product not found for style: ${item.style}`);
                 throw new Error(`Product not found for style: ${item.style}`);
             }
             
@@ -40,6 +50,8 @@ export default async function handler(req, res) {
                 quantity: item.quantity,
             };
         });
+
+        console.log('Line items:', line_items);
 
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
@@ -52,9 +64,19 @@ export default async function handler(req, res) {
             }
         });
 
+        console.log('Stripe session created:', session.id);
         res.status(200).json({ id: session.id });
     } catch (error) {
         console.error('Error creating checkout session:', error);
-        res.status(500).json({ error: 'Failed to create checkout session' });
+        console.error('Error details:', {
+            message: error.message,
+            type: error.type,
+            code: error.code,
+            stack: error.stack
+        });
+        res.status(500).json({ 
+            error: 'Failed to create checkout session',
+            details: error.message 
+        });
     }
 }
