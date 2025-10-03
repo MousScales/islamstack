@@ -1,5 +1,9 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
+// Debug: Check if API key is loaded
+console.log('Stripe API key loaded:', process.env.STRIPE_SECRET_KEY ? 'Yes' : 'No');
+console.log('API key starts with:', process.env.STRIPE_SECRET_KEY ? process.env.STRIPE_SECRET_KEY.substring(0, 10) + '...' : 'No key');
+
 // Stripe product mapping
 const stripeProducts = {
     'Style 1': { productId: 'prod_TALKJCrtITlN2W', priceId: 'price_1SE0dNRzY93579XlRSSAxRg2' },
