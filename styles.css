@@ -44,12 +44,31 @@ body {
     width: 100%;
 }
 
+.brand-container {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-shrink: 0;
+}
+
+.brand-logo {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.3));
+    transition: all 0.3s ease;
+}
+
+.brand-logo:hover {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.5));
+}
+
 .brand {
     color: #d4af37;
     font-size: 1.5rem;
     font-weight: 600;
     margin: 0;
-    flex-shrink: 0;
 }
 
 .verse {
@@ -821,6 +840,15 @@ body {
         gap: 1rem;
     }
     
+    .brand-container {
+        gap: 0.5rem;
+    }
+    
+    .brand-logo {
+        width: 35px;
+        height: 35px;
+    }
+    
     .brand {
         font-size: 1.3rem;
     }
@@ -1108,6 +1136,11 @@ body {
     /* Header Extra Small */
     .header-flex {
         padding: 0 10px;
+    }
+    
+    .brand-logo {
+        width: 30px;
+        height: 30px;
     }
     
     .brand {
