@@ -27,6 +27,9 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'No items in cart' });
     }
 
+    // Calculate subtotal
+    const subtotal = cart_items.reduce((total, item) => total + (3000 * item.quantity), 0); // $30.00 per item in cents
+    
     // Simple product mapping - just use one price for all styles
     const line_items = cart_items.map(item => ({
       price_data: {
@@ -40,6 +43,33 @@ export default async function handler(req, res) {
       },
       quantity: item.quantity,
     }));
+
+    // Add shipping fee
+    line_items.push({
+      price_data: {
+        currency: 'usd',
+        product_data: {
+          name: 'Shipping Fee',
+          description: 'Standard shipping',
+        },
+        unit_amount: 500, // $5.00 in cents
+      },
+      quantity: 1,
+    });
+
+    // Add tax (10% of subtotal)
+    const taxAmount = Math.round(subtotal * 0.10);
+    line_items.push({
+      price_data: {
+        currency: 'usd',
+        product_data: {
+          name: 'Tax (10%)',
+          description: 'Sales tax',
+        },
+        unit_amount: taxAmount,
+      },
+      quantity: 1,
+    });
 
     console.log('Line items created:', JSON.stringify(line_items, null, 2));
 

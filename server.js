@@ -36,6 +36,9 @@ app.post('/create-checkout-session', async (req, res) => {
     try {
         const { cart_items, mode, success_url, cancel_url } = req.body;
 
+        // Calculate subtotal
+        const subtotal = cart_items.reduce((total, item) => total + (3000 * item.quantity), 0); // $30.00 per item in cents
+
         // Convert cart items to Stripe line items using actual product IDs
         const line_items = cart_items.map(item => {
             const stripeProduct = stripeProducts[item.style];
@@ -47,6 +50,33 @@ app.post('/create-checkout-session', async (req, res) => {
                 price: stripeProduct.priceId,
                 quantity: item.quantity,
             };
+        });
+
+        // Add shipping fee
+        line_items.push({
+            price_data: {
+                currency: 'usd',
+                product_data: {
+                    name: 'Shipping Fee',
+                    description: 'Standard shipping',
+                },
+                unit_amount: 500, // $5.00 in cents
+            },
+            quantity: 1,
+        });
+
+        // Add tax (10% of subtotal)
+        const taxAmount = Math.round(subtotal * 0.10);
+        line_items.push({
+            price_data: {
+                currency: 'usd',
+                product_data: {
+                    name: 'Tax (10%)',
+                    description: 'Sales tax',
+                },
+                unit_amount: taxAmount,
+            },
+            quantity: 1,
         });
 
         const session = await stripe.checkout.sessions.create({
